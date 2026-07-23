@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> - اقوى </title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2966067047247966" crossorigin="anonymous"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+:root {سكربت
+  --black: #080808;
+  --purple: #8A2BE2;
+  --purple-light: #a855f7;
+  --red: #FF2D2D;
+  --red-dark: #cc1a1a;
+  --gold: #FFD700;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--black);
+  color: #fff;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+#cursor {
+  position: fixed;
+  width: 20px; height: 20px;
+  border: 2px solid var(--purple-light);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: screen;
+}
+#cursor-dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  background: var(--purple-light);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 10px var(--purple-light), 0 0 20px var(--purple);
+}
+#cursor-glow {
+  position: fixed;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(138,43,226,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9990;
+  transform: translate(-50%, -50%);
+}
+
+/* ── LOADING SCREEN ── */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+.loader-logo {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--red), var(--purple), var(--purple-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse-text 1s ease-in-out infinite alternate;
+}
+@keyframes pulse-text {
+  from { filter: drop-shadow(0 0 10px rgba(138,43,226,0.5)); }
+  to   { filter: drop-shadow(0 0 30px rgba(255,45,45,0.8)); }
+}
+.loader-bar-wrap {
+  width: 220px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.loader-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--red), var(--purple));
+  border-radius: 99px;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 12px var(--purple);
+}
+.loader-pct {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+}
+
+/* ── CANVAS ── */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.18;
+  filter: saturate(1.5) brightness(0.9);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,45,45,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 100%, rgba(138,43,226,0.15) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.7) 60%, rgba(8,8,8,1) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  max-width: 700px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,45,45,0.1);
+  border: 1px solid rgba(255,45,45,0.3);
+  border-radius: 99px;
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ff6b6b;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--red);
+  animation: blink 1.2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero-title {
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+.title-delta {
+  background: linear-gradient(135deg, #fff 0%, #e0aaff 50%, var(--purple-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(168,85,247,0.6));
+}
+.title-hack {
+  background: linear-gradient(135deg, var(--red) 0%, #ff7043 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 25px rgba(255,45,45,0.7));
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-wrap {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  position: relative;
+  padding: 1rem 2.2rem;
+  border-radius: 14px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, var(--red), #c0150b);
+  color: #fff;
+  box-shadow: 0 0 30px rgba(255,45,45,0.4), 0 4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  border-radius: inherit;
+}
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 50px rgba(255,45,45,0.6), 0 8px 30px rgba(0,0,0,0.6);
+}
+
+.btn-secondary {
+  padding: 1rem 2.2rem;
+  border-radius: 14px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  background: rgba(138,43,226,0.1);
+  border: 1.5px solid rgba(138,43,226,0.4);
+  color: var(--purple-light);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  background: rgba(138,43,226,0.2);
+  box-shadow: 0 0 30px rgba(138,43,226,0.3);
+}
+
+/* ── STATS ── */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+  position: relative;
+  z-index: 2;
+  padding: 2rem 1.5rem;
+}
+.stat-card {
+  text-align: center;
+  padding: 1.2rem 1.8rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  min-width: 130px;
+}
+.stat-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--purple-light), #e879f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+.section-title {
+  text-align: center;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  margin-bottom: 0.6rem;
+}
+.section-sub {
+  text-align: center;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.95rem;
+  margin-bottom: 3rem;
+}
+
+/* ── UNLOCK SECTION ── */
+#unlock-section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.unlock-card {
+  background: rgba(12,12,18,0.85);
+  border: 1px solid rgba(138,43,226,0.2);
+  border-radius: 28px;
+  padding: 2.5rem 2rem;
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 0 1px rgba(138,43,226,0.1),
+    0 0 60px rgba(138,43,226,0.08),
+    0 30px 60px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.unlock-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(138,43,226,0.6), transparent);
+}
+
+.banner-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.unlock-title {
+  font-size: 1.9rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff, #d8b4fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.unlock-sub {
+  text-align: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.9rem;
+  margin-bottom: 2.2rem;
+}
+
+/* ── TASK BUTTONS ── */
+.task-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 1.1rem 1.4rem;
+  border-radius: 16px;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: right;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.85rem;
+}
+
+.task-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
+  pointer-events: none;
+}
+
+.task-btn:hover:not(:disabled) {
+  transform: translateX(-4px) scale(1.01);
+}
+
+.task-btn.red {
+  background: linear-gradient(135deg, #c8181b, #8b0000);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(200,24,27,0.35);
+}
+.task-btn.red:hover:not(:disabled) {
+  box-shadow: 0 6px 30px rgba(255,45,45,0.55);
+}
+
+.task-btn.blue {
+  background: linear-gradient(135deg, #0369a1, #1d4ed8);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(29,78,216,0.35);
+}
+.task-btn.blue:hover:not(:disabled) {
+  box-shadow: 0 6px 30px rgba(56,189,248,0.4);
+}
+
+.task-btn.discord {
+  background: linear-gradient(135deg, #5865F2, #4752c4);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(88,101,242,0.4);
+}
+.task-btn.discord:hover:not(:disabled) {
+  box-shadow: 0 6px 30px rgba(88,101,242,0.6);
+}
+.task-icon.discord-icon {
+  background: #ffffff;
+  padding: 6px;
+}
+.task-icon.discord-icon svg { width: 100%; height: 100%; }
+
+.task-btn.done-state {
+  background: linear-gradient(135deg, #065f46, #047857) !important;
+  box-shadow: 0 4px 20px rgba(5,150,105,0.4) !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+.task-btn:disabled { cursor: default; }
+
+.task-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.task-label { flex: 1; }
+.task-arrow {
+  font-size: 1.1rem;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap { margin: 1.8rem 0; }
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.progress-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+.progress-count { font-size: 0.9rem; font-weight: 800; color: #4ade80; }
+
+.progress-bar-bg {
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #10b981, #4ade80);
+  transition: width 0.7s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 0 12px rgba(74,222,128,0.6);
+  position: relative;
+}
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 20px;
+  background: rgba(255,255,255,0.4);
+  filter: blur(4px);
+  animation: shimmer 1s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* ── UNLOCK BTN ── */
+.unlock-btn {
+  display: none;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1.3rem;
+  border-radius: 18px;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  box-shadow: 0 0 40px rgba(16,185,129,0.5), 0 8px 30px rgba(0,0,0,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: unlock-pulse 2s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.unlock-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: sweep 2s 0.5s ease-in-out infinite;
+}
+@keyframes sweep { to { left: 150%; } }
+@keyframes unlock-pulse {
+  0%,100%{box-shadow:0 0 40px rgba(16,185,129,0.5)}
+  50%{box-shadow:0 0 70px rgba(16,185,129,0.8)}
+}
+.unlock-btn:hover { transform: translateY(-3px) scale(1.02); }
+.unlock-btn.show { display: block; }
+
+/* ── CONFETTI PARTICLE ── */
+.confetti-piece {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 9998;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── STEP INDICATORS ── */
+.steps-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.steps-row::before {
+  content: '';
+  position: absolute;
+  top: 17px;
+  right: 15%;
+  left: 15%;
+  height: 2px;
+  background: rgba(255,255,255,0.07);
+  z-index: 0;
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  z-index: 1;
+}
+.step-num {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.3);
+  background: var(--black);
+  transition: all 0.4s;
+}
+.step-num.active {
+  border-color: var(--purple-light);
+  color: var(--purple-light);
+  box-shadow: 0 0 12px rgba(168,85,247,0.4);
+}
+.step-num.complete {
+  border-color: #10b981;
+  background: rgba(16,185,129,0.15);
+  color: #10b981;
+}
+.step-text {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  font-weight: 600;
+}
+
+/* ── BLOG SECTION ── */
+#blog-section {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+}
+.blog-post {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: right;
+  backdrop-filter: blur(10px);
+}
+.blog-title {
+  font-size: 1.4rem;
+  color: var(--purple-light);
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+.blog-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+footer p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.2);
+}
+footer span {
+  color: var(--purple-light);
+  font-weight: 700;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .cta-wrap { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; }
+  .stats-row { gap: 1rem; }
+}
+
+/* ── SCROLL FADE IN ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ── TRICK MESSAGE & ANIMATION (NEW) ── */
+#trick-msg {
+  display: none;
+  background: rgba(255, 45, 45, 0.1);
+  border: 1px solid rgba(255, 45, 45, 0.4);
+  color: #ff6b6b;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+.shake-animation {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor-glow"></div>
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- CANVAS BG -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ════════════════════ LOADER ════════════════════ -->
+<div id="loader">
+  <div class="loader-logo">🥷 DELTA</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar" id="loader-bar"></div>
+  </div>
+  <div class="loader-pct" id="loader-pct">0%</div>
+</div>
+
+<!-- ════════════════════ UNLOCK SECTION ════════════════════ -->
+<section id="unlock-section">
+  <div class="section-label">خطوات الحصول على الرابط</div>
+  <h2 class="section-title">
+    <span style="color:var(--purple-light)">أكمل المهام</span> للتحميل
+  </h2>
+  <p class="section-sub">أكمل جميع الخطوات أدناه لفتح رابط التحميل المجاني</p>
+
+  <div class="unlock-card fade-up" id="unlock-card">
+
+    <!-- Banner Image -->
+    <img class="banner-img"
+         id="bannerImg"
+         src="delta.png"
+         onerror="this.src='https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=900'"
+         alt="Delta Executor APK">
+
+    <!-- Steps indicator -->
+    <div class="steps-row" id="steps-row">
+      <div class="step-item">
+        <div class="step-num active" id="snum0">1</div>
+        <div class="step-text">يوتيوب</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" id="snum1">2</div>
+        <div class="step-text">إعجاب</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" id="snum2">3</div>
+        <div class="step-text">تعليق</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" id="snum3">4</div>
+        <div class="step-text">تيليجرام</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num" id="snum4">5</div>
+        <div class="step-text">ديسكورد</div>
+      </div>
+    </div>
+
+    <div class="unlock-title">🥷 رابط ال</div>
+    <div class="unlock-sub">أكمل جميع الإجراءات لفتح رابط التحميل</div>
+
+    <!-- رسالة التحقق (مخفية بالبداية - جديدة) -->
+    <div id="trick-msg">
+      ⚠️ تم التحقق من قبل النظام: <br>
+      اكتشفنا أنك لم تقم بوضع اللايك والاشتراك بشكل فعلي! <br>
+      إذا كنت قد وضعتها، قم بإلغائها ثم أعد وضعها لتأكيد العملية.
+    </div>
+
+    <!-- Task Buttons -->
+    <button id="task0" onclick="startTask(0)" class="task-btn red">
+      <div class="task-icon">▶</div>
+      <div class="task-label">اشترك في القناة</div>
+      <div class="task-arrow">←</div>
+    </button>
+
+    <button id="task1" onclick="startTask(1)" class="task-btn red" disabled>
+      <div class="task-icon">👍</div>
+      <div class="task-label">أعجب بالفيديو</div>
+      <div class="task-arrow">←</div>
+    </button>
+
+    <button id="task2" onclick="startTask(2)" class="task-btn red" disabled>
+      <div class="task-icon">💬</div>
+      <div class="task-label">علّق على الفيديو</div>
+      <div class="task-arrow">←</div>
+    </button>
+
+    <button id="task3" onclick="startTask(3)" class="task-btn blue" disabled>
+      <div class="task-icon">✈️</div>
+      <div class="task-label">انضم إلى تيليجرام</div>
+      <div class="task-arrow">←</div>
+    </button>
+
+    <button id="task4" onclick="startTask(4)" class="task-btn discord" disabled>
+      <div class="task-icon discord-icon">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#5865F2" d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+        </svg>
+      </div>
+      <div class="task-label">انضم إلى سيرفر الديسكورد</div>
+      <div class="task-arrow">←</div>
+    </button>
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-header">
+        <span class="progress-label">التقدم الكلي</span>
+        <span class="progress-count" id="progressText">0 / 5 مهام</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="bar"></div>
+      </div>
+    </div>
+
+    <!-- Unlock Button (معدل للعمل مع دالة المقلب) -->
+    <button class="unlock-btn" id="unlockBtn" onclick="finalUnlock()">
+      🔓رابط السكربت — !
+    </button>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>صُنع بـ ❤️ بواسطة <span>@fluke.1</span> · جميع الحقوق محفوظة 2025</p>
+</footer>
+
+<!-- ════════════════════ SCRIPTS ════════════════════ -->
+<script>
+/* ── CONFIG ── */
+const CONFIG = {
+  bannerImage:   "file_00000000ae3081fdb03e7fd3470ffbab.png",
+  channelUrl:    "https://youtube.com/@fluke.1?si=v8zD-vqLNxheiXiu",
+  likeVideoUrl:  "https://youtu.be/PLU_3UmQk0s?si=O0FzQF-HOXSAoBIL",
+  commentVideoUrl:"https://youtu.be/PLU_3UmQk0s?si=O0FzQF-HOXSAoBIL",
+  telegramUrl:   "https://t.me/Fluke191",
+  discordUrl:    "https://discord.gg/RrXAVjTH3y",
+  finalUrl:      "https://raw.githubusercontent.com/fluke1111/raw/refs/heads/main/raw.txt",
+};
+
+const tasks = [CONFIG.channelUrl, CONFIG.likeVideoUrl, CONFIG.commentVideoUrl, CONFIG.telegramUrl, CONFIG.discordUrl];
+const done  = [false, false, false, false, false];
+let trickActivated = false; // المتغير الجديد لعمل المقلب لمرة واحدة
+
+if (CONFIG.bannerImage) {
+  document.getElementById('bannerImg').src = CONFIG.bannerImage;
+}
+
+/* ── CURSOR ── */
+const cursor    = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursor-dot');
+const cursorGlow= document.getElementById('cursor-glow');
+let mx=0, my=0, cx=0, cy=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursorDot.style.left  = mx - 3 + 'px';
+  cursorDot.style.top   = my - 3 + 'px';
+  cursorGlow.style.left = mx + 'px';
+  cursorGlow.style.top  = my + 'px';
+});
+function animateCursor() {
+  cx += (mx - cx) * 0.12;
+  cy += (my - cy) * 0.12;
+  cursor.style.left = cx - 10 + 'px';
+  cursor.style.top  = cy - 10 + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('button, a').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2)');
+  el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+});
+
+/* ── CANVAS PARTICLES ── */
+const canvas = document.getElementById('bg-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function Particle() {
+  this.x = Math.random() * W;
+  this.y = Math.random() * H;
+  this.r = Math.random() * 1.5 + 0.3;
+  this.vx = (Math.random() - 0.5) * 0.3;
+  this.vy = (Math.random() - 0.5) * 0.3;
+  this.o = Math.random() * 0.5 + 0.1;
+  this.c = Math.random() > 0.5 ? '138,43,226' : '255,45,45';
+}
+
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+function drawCanvas() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.c},${p.o})`;
+    ctx.fill();
+  });
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < 90) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(138,43,226,${0.06 * (1 - d/90)})`;
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawCanvas);
+}
+drawCanvas();
+
+/* ── LOADER ── */
+const loaderEl  = document.getElementById('loader');
+const loaderBar = document.getElementById('loader-bar');
+const loaderPct = document.getElementById('loader-pct');
+let pct = 0;
+const loaderInt = setInterval(() => {
+  pct += Math.random() * 8 + 2;
+  if (pct >= 100) {
+    pct = 100;
+    clearInterval(loaderInt);
+    setTimeout(() => {
+      loaderEl.style.transition = 'opacity 0.6s ease';
+      loaderEl.style.opacity = '0';
+      setTimeout(() => {
+        loaderEl.style.display = 'none';
+        introAnimate();
+      }, 600);
+    }, 300);
+  }
+  loaderBar.style.width = pct + '%';
+  loaderPct.textContent = Math.floor(pct) + '%';
+}, 60);
+
+/* ── INTRO GSAP ── */
+function introAnimate() {
+  if (typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.from('#hero-badge',   { opacity:0, y:20, duration:0.6, delay:0.1 });
+  gsap.from('#hero-title',   { opacity:0, y:40, duration:0.8, delay:0.3, ease:'power3.out' });
+  gsap.from('#hero-sub',     { opacity:0, y:30, duration:0.7, delay:0.55 });
+  gsap.from('#hero-cta',     { opacity:0, y:25, duration:0.7, delay:0.75 });
+  gsap.from('#stats-row .stat-card', {
+    opacity:0, y:30, stagger:0.12, duration:0.7, delay:1, ease:'back.out(1.2)'
+  });
+  gsap.to('#unlock-card', {
+    scrollTrigger: { trigger:'#unlock-card', start:'top 80%' },
+    opacity:1, y:0, duration:0.8, ease:'power3.out'
+  });
+}
+
+/* ── TASKS ── */
+function startTask(index) {
+  if (done[index]) return;
+  const btn = document.getElementById('task' + index);
+  window.open(tasks[index], '_blank');
+  btn.disabled = true;
+  btn.querySelector('.task-label').textContent = '⏳ جاري التحقق...';
+  btn.querySelector('.task-arrow').textContent = '';
+  setTimeout(() => {
+    done[index] = true;
+    btn.classList.remove('red','blue','discord');
+    btn.classList.add('done-state');
+    btn.querySelector('.task-icon').textContent = '✅';
+    btn.querySelector('.task-label').textContent = 'تم بنجاح!';
+    
+    const snum = document.getElementById('snum' + index);
+    if (snum) {
+      snum.classList.remove('active');
+      snum.classList.add('complete');
+      snum.textContent = '✓';
+    }
+    
+    // تعديل ذكي لضمان عدم تفعيل زر مهمة منتهية مسبقاً (مهم جداً للمقلب)
+    const next = document.getElementById('snum' + (index + 1));
+    if (next && !done[index + 1]) next.classList.add('active');
+    
+    const nextBtn = document.getElementById('task' + (index + 1));
+    if (nextBtn && !done[index + 1]) nextBtn.disabled = false;
+    
+    updateProgress();
+  }, 12000);
+}
+
+/* ── PROGRESS ── */
+function updateProgress() {
+  const completed = done.filter(x => x).length;
+  document.getElementById('progressText').textContent = completed + ' / 5 مهام';
+  document.getElementById('bar').style.width = (completed / 5 * 100) + '%';
+  
+  const btn = document.getElementById('unlockBtn');
+  if (completed === 5) {
+    btn.classList.add('show');
+    launchConfetti();
+    if (typeof gsap !== 'undefined') {
+      gsap.from('#unlockBtn', { scale:0.8, opacity:0, duration:0.6, ease:'back.out(2)' });
+    }
+  } else {
+    // إخفاء الزر في حال رجوع التقدم بسبب المقلب
+    btn.classList.remove('show');
+  }
+}
+
+/* ── CONFETTI ── */
+function launchConfetti() {
+  const colors = ['#8A2BE2','#FF2D2D','#FFD700','#4ade80','#38bdf8','#e879f9'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.cssText = `
+        left:${Math.random()*100}vw;
+        top:-10px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        transform:rotate(${Math.random()*360}deg);
+        animation-duration:${1.5+Math.random()*2}s;
+        animation-delay:${Math.random()*0.5}s;
+      `;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+/* ── TRICK LOGIC (نظام المقلب الجديد) ── */
+function finalUnlock() {
+  if (!trickActivated) {
+    // تفعيل المقلب للمرة الأولى
+    trickActivated = true;
+
+    // إظهار رسالة الخطأ
+    const msgEl = document.getElementById('trick-msg');
+    msgEl.style.display = 'block';
+
+    // إضافة تأثير الاهتزاز للبطاقة كاملة
+    const card = document.getElementById('unlock-card');
+    card.classList.add('shake-animation');
+    setTimeout(() => {
+      card.classList.remove('shake-animation');
+    }, 500);
+
+    // تصفير مهمة الاشتراك (0) ومهمة الإعجاب (1)
+    done[0] = false;
+    done[1] = false;
+
+    // إعادة ضبط شكل الأزرار
+    resetTaskBtnForTrick(0, '▶', 'اشترك في القناة (تأكيد)', false); // نفتحه
+    resetTaskBtnForTrick(1, '👍', 'أعجب بالفيديو (تأكيد)', true);  // نقفله لحد ما يكمل 0
+
+    // تحديث شريط التقدم (راح يخفي زر التحميل تلقائياً)
+    updateProgress();
+    
+    // رفع الشاشة للأعلى قليلاً ليرى المستخدم الرسالة
+    document.getElementById('unlock-section').scrollIntoView({ behavior: 'smooth' });
+
+  } else {
+    // في حال كمل المهام المرة الثانية وضغط الزر.. يفتح الرابط الحقيقي
+    window.open(CONFIG.finalUrl, '_blank');
+  }
+}
+
+function resetTaskBtnForTrick(index, icon, text, isDisabled) {
+  const btn = document.getElementById('task' + index);
+  btn.disabled = isDisabled;
+  btn.className = 'task-btn red'; // نرجعه أحمر
+  btn.querySelector('.task-icon').textContent = icon;
+  btn.querySelector('.task-label').textContent = text;
+  btn.querySelector('.task-arrow').textContent = '←';
+
+  // إعادة ضبط أرقام الخطوات العلوية
+  const snum = document.getElementById('snum' + index);
+  if (snum) {
+    snum.className = 'step-num'; // إزالة اللون الأخضر
+    if (index === 0) snum.classList.add('active'); // تفعيل الدائرة الأولى
+    snum.textContent = (index + 1); // إرجاع الرقم
+  }
+}
+
+/* ── PARALLAX HERO IMAGE ── */
+window.addEventListener('scroll', () => {
+  const img = document.querySelector('.hero-bg-img');
+  if (img) img.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+});
+</script>
+</body>
+</html>
